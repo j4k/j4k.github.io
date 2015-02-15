@@ -1,0 +1,12 @@
+# Site settings
+title: Jack Wall's blog
+email: jw@jack.gd
+description: > # this means to ignore newlines until "baseurl:"
+  I'm Jack. I like puzzles, elegant solutions and programming languages. I'm also a big fan of Agile, and Scotch.
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://jackwall.io" # the base hostname & protocol for your site
+twitter_username: jackw411
+github_username:  j4k
+
+# Build settings
+markdown: kramdown
