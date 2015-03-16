@@ -12,7 +12,7 @@ However on deployment I could not get web sockets connected so I could push data
 
 I added this to this file:
 
-{% highlight %}
+{% highlight ruby %}
 files:
     "/etc/nginx/conf.d/websocketupgrade.conf" :
         mode: "000755"
