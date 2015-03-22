@@ -17,6 +17,7 @@ This is something we had done before quite easily, but we hit a problem when we 
 Parsing blocks in an Area is quite simple.
 
 {% highlight php %}
+<?php
     public function getBlocks()
     {
         $allBlocks = Page::getCurrentPage()->getBlocks('Main'); // get blocks from `Main` area
@@ -39,6 +40,7 @@ Concrete5's Areas are hard coding strings in layout files, so there's no clean w
 The trickiest thing about getting blocks out of stacks is the lack of documentation on Concrete5's part. It's pretty easy to do once you know what you are doing. First you start off the same way - get all the blocks within a prescribed area. Stacks have a `btHandle` of `core_stack_display`, so we check for those and add them to an array.
 
 {% highlight php %}
+<?php
     $stackArray = array();
     $blocks = Page::getCurrentPage()->getBlocks('Main'); // get blocks from area
 
@@ -59,6 +61,7 @@ Stack blocks carry an extra attribute called `stID` which is the Stack Identifie
 Now we have that it's a matter of looping through them as you would blocks...
 
 {% highlight php %}
+<?php
     $stackBlocks = array();
     foreach ($stackArray as $key => $stack) {
             $blocks = $stack->getBlocks(STACKS_AREA_NAME);
