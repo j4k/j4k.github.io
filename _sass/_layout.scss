@@ -3,24 +3,30 @@
  */
 .site-header {
     border-top: 5px solid $grey-color-dark;
-    border-bottom: 1px solid $grey-color-light;
     min-height: 56px;
-
+    background-color: #384452;
+    color:$white;
     // Positioning context for the mobile navigation icon
     position: relative;
+    padding: 0.5em 0.5em 1em 0.5em;
 }
 
 .site-title {
-    font-size: 26px;
+    font-size: 18px;
     line-height: 56px;
-    letter-spacing: -1px;
+//    letter-spacing: -1px;
     margin-bottom: 0;
     float: left;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 900;
+    color: $white;
 
     &,
-    &:visited {
-        color: $grey-color-dark;
+    &:visited, :hover {
+        color: $white;
+        text-decoration:none;
     }
+
 }
 
 .site-nav {
@@ -32,13 +38,22 @@
     }
 
     .page-link {
-        color: $text-color;
+        color: $white;
         line-height: $base-line-height;
+        font-family: 'Raleway', sans-serif;
+        font-weight: 900;
+        text-transform: uppercase;
+        font-size:12px;
 
         // Gaps between nav items, but not on the first one
         &:not(:first-child) {
             margin-left: 20px;
         }
+
+        @include media-query($on-palm) {
+            color: $grey-color-dark;
+        }
+
     }
 
     @include media-query($on-palm) {
@@ -94,6 +109,13 @@
 .site-footer {
     border-top: 1px solid $grey-color-light;
     padding: $spacing-unit 0;
+    background-color: #384452;
+    color: $white;
+
+    svg {
+        color: $white;
+    }
+
 }
 
 .footer-heading {
@@ -109,7 +131,7 @@
 
 .footer-col-wrapper {
     font-size: 15px;
-    color: $grey-color;
+    color: $white;
     margin-left: -$spacing-unit / 2;
     @extend %clearfix;
 }
@@ -195,15 +217,20 @@
  */
 .post-header {
     margin-bottom: $spacing-unit;
+    background-color: $brand-color;
+    color: $white;
+    padding-top: 25px;
+    padding-bottom: 25px;
 }
 
 .post-title {
-    font-size: 42px;
-    letter-spacing: -1px;
+    font-size: 24px;
     line-height: 1;
+    margin-bottom:0;
+    line-height: 26px;
 
     @include media-query($on-laptop) {
-        font-size: 36px;
+        font-size: 20px;
     }
 }
 

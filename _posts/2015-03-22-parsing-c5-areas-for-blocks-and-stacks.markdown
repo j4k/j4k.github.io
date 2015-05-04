@@ -5,8 +5,6 @@ date:   2015-03-22 20:19:11
 categories: concrete5
 ---
 
-### Parsing Concrete5 Areas for Blocks and Stacks
-
 Recently we were challenged to find an easy way to loop through a page layouts blocks and extract certain ones that contained geolocation information to be drawn onto a Mapbox Map.
 
 This is something we had done before quite easily, but we hit a problem when we needed to descend into stacks in an Area. This isn't something that is well documented, and took a little while of delving into Concrete5's source to solve.
