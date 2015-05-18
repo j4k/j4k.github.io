@@ -1,13 +1,13 @@
 ---
 layout: post
-title:  "URL Validation in PHP for regex."
+title:  "URL Validation in PHP with regex"
 date:   2015-05-18 20:19:11
 categories: php regex
 ---
 
 # URL Validation
 
-Processing URLs for validity according to the [living specification](https://url.spec.whatwg.org/#url-parsing) in PHP is non trivial. There are lots of things to consider, and lots of different things can be considered a url. `http://➡.ws/䨹'` is a valid domain according to the spec for instance, as is `http://223.255.255.254` and `http://userid:password@example.com:8080/`.
+Processing URLs for validity according to the [living specification](https://url.spec.whatwg.org/#url-parsing) in PHP is non trivial. There are lots of things to consider, and lots of different things can be considered a url. `http://➡.ws/䨹'` is a valid domain according to the spec for instance, as is `http://223.255.255.254` and `http://userid:password@example.com:8080/`. This article is going to briefly go over two ways that I validate domains depending on my needs, runs over basic regular expressions, and gives a more complex example of a more robust regex that handles most cases in the living specification (though some cases fall through!). If any regular expressions wizards notice anything I could have done better here - send me a [tweet](http://twitter.com/jackw411).
 
 ### DNS Lookups
 
@@ -35,8 +35,6 @@ This method has the obvious drawback that if the domain you are trying to valida
 
 ### Regular Expressions
 
-** Disclaimer: these Regex patterns are PCRE, you may need to adjust them somewhat if you aren't using PHP. *
-
 Another way to validate a domain is to validate it using Regular Expressions. This doesn't ensure that the domain actually exists, but for a quick check that the structure of a URL is valid rather than it's presence on the internet, they often suffice.
 
 If you need something that just validates western urls for form validation - something like this may do:
@@ -55,7 +53,7 @@ This will validate a basic http/https/ftp url. It does not however, take into ac
 
 To extract the domain name using a regular expression like this you would have to change the non-capturing groups we are using to define segments in the regex to capturing groups. Capturing groups allow you define portions of an overall pattern that you want to extract on their own. Non-capturing groups allow you to structure your regular expression, and write sub-patterns within a regular expression easily, without capturing anything from within the group, unless there is a capturing group nested inside.
 
-A non-capturing group is defined as thus: `(?: )`, and a capturing group is defined simply as `()`. Sticking a `?` behind one of these groups makes these an optional part of the regex. So, in the above regex, we start after the delimiter `#` with the start of a capturing group, which allows us to grab the whole url out of a preg_match as the one and only match. Next we use a non capturing group `(?:https?|ftp)` to say "optionally, check for the presence of the characters http, https or ftp". This is done with the order of the `?` and the pipe character (`|`). The question mark indicates to the parser that the preceeding character should be matched 0 or 1 times, making it an optional character, and the pipe symbol pretty much translates into "or".
+A non-capturing group is defined as thus: `(?: )`, and a capturing group is defined simply as `()`. Sticking a `?` quantifier behind one of these groups makes these an optional part of the regex. So, in the above regex, we start after the delimiter `#` with the start of a capturing group, which allows us to grab the whole url out of a preg_match as the one and only match. Next we use a non capturing group `(?:https?|ftp)` to say "optionally, check for the presence of the characters http, https or ftp". This is done with the order of the `?` and the pipe character (`|`). The question mark indicates to the parser that the preceeding character should be matched 0 or 1 times, making it an optional character, and the pipe symbol pretty much translates into "or".
 
 After this, the regex tries to match `://` exactly, because it is not inside any character class. After this, we come up against the next non-capturing group `(?:\S*?\.\S*?)`. This one contains something called a metacharacter `\S`. There are a few different metacharacters in regular expressions and they vary from implementation to implementation. This one here, means "match any non-whitespace character". Following this metacharacter up with a `*` quantifier changes the meaning slightly, as the `*` quantifier means "0 or more" so by changing these together we get "match any non-whitespace character 0 or more times". Chaining this again with `?` which me know to mean "optionally", changes the meaning again.. you get the idea.
 
@@ -66,6 +64,10 @@ As stated before this isn't a bulletproof regular expression. It is very greedy 
 Let's make it a bit more robust.
 
 ### Excluding phrases in Regex.
+
+So now that we know how to *include* certain patterns, wouldn't it be handy to exclude certain patterns in our regular expression to adhere to the living standard mentioned before. This can be done with something called a negative assertion. Looking at a [cheatsheet](https://duckduckgo.com/?q=regex&ia=answer) we can see, under assertions, that a Negative lookahead is defined with `?!`. Sticking this inside a capturing group, gives us a negative lookahead for anything within the group. This is pretty powerful, and what the lookahead part means during the comparison of a string and a regular expression is "from whereever we are in the comparison, take a peek ahead and see if the stuff inside this group matches anything coming up, if so, bail". You can see in the regular expression below we use these for a few things.
+
+We check for local networks first and exclude those, followed by private networks. Then in the same group the regex checks if it is actually an IP, and match for IP ranges, and if it finds no match we use the pipe separator to check for a domain name. After either one of these two checks passes, port number and resource path are set.
 
 {% highlight php %}
 <?php
@@ -117,5 +119,6 @@ This is not exhaustive, for example - it will match anything as a top level doma
 
 ### Working with Regex
 
-Working with regex is all about recognising what the symbols mean. To help you figure out what a regular expression is doing, you should copy it into something like [regex101](http://regex101.com) or [regexr](http://regexr.com), which will give you a break down of what the various parts of the regular expression denote.
+Working with regex is all about recognising what the symbols mean. To help you figure out what a regular expression is doing, you should copy it into something like [regex101](http://regex101.com) or [regexr](http://regexr.com), which will give you a break down of what the various parts of the regular expression denote. For people trying to penetrate regular expressions, there is an excellent primer on Laracasts, thats about 10 minutes long, and will really give you a jump start in the world of regular expressions For people trying to penetrate regular expressions, there is an excellent primer on [Laracasts](http://laracasts.com), thats about 10 minutes long, and will really give you a jump start in the world of regular expressions.
 
+If you have any questions or need a hand, tweet me [@jackw411](http://twitter.com/jackw411), I'm happy to help!
