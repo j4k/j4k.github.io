@@ -119,6 +119,6 @@ This is not exhaustive, for example - it will match anything as a top level doma
 
 ### Working with Regex
 
-Working with regex is all about recognising what the symbols mean. To help you figure out what a regular expression is doing, you should copy it into something like [regex101](http://regex101.com) or [regexr](http://regexr.com), which will give you a break down of what the various parts of the regular expression denote. For people trying to penetrate regular expressions, there is an excellent primer on Laracasts, thats about 10 minutes long, and will really give you a jump start in the world of regular expressions For people trying to penetrate regular expressions, there is an excellent primer on [Laracasts](http://laracasts.com), thats about 10 minutes long, and will really give you a jump start in the world of regular expressions.
+Working with regex is all about recognising what the symbols mean. To help you figure out what a regular expression is doing, you should copy it into something like [regex101](http://regex101.com) or [regexr](http://regexr.com), which will give you a break down of what the various parts of the regular expression denote. For people trying to penetrate regular expressions, there is an excellent primer on Laracasts, thats about 10 minutes long, and will really give you a jump start in the world of regular expressions.
 
 If you have any questions or need a hand, tweet me [@jackw411](http://twitter.com/jackw411), I'm happy to help!
